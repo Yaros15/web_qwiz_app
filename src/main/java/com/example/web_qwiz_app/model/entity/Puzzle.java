@@ -16,9 +16,8 @@ public class Puzzle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
+    @Column(nullable = false)
+    private String question;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = false)
