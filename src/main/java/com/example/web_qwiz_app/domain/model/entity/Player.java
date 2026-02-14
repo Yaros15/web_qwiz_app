@@ -1,6 +1,6 @@
-package com.example.web_qwiz_app.model.entity;
+package com.example.web_qwiz_app.domain.model.entity;
 
-import com.example.web_qwiz_app.model.enu.Faculty;
+import com.example.web_qwiz_app.domain.model.enums.Faculty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.example.web_qwiz_app.model.entity;
+package com.example.web_qwiz_app.domain.model.entity;
 
-import com.example.web_qwiz_app.model.enu.QuestCategory;
+import com.example.web_qwiz_app.domain.model.enums.QuestCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class Puzzle {
     @Column(nullable = false)
     private String question;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 

@@ -1,4 +1,4 @@
-package com.example.web_qwiz_app.model.enu;
+package com.example.web_qwiz_app.domain.model.enums;
 
 public enum Faculty {
 

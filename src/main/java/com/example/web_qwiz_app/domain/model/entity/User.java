@@ -1,7 +1,6 @@
-package com.example.web_qwiz_app.model.entity;
+package com.example.web_qwiz_app.domain.model.entity;
 
-import com.example.web_qwiz_app.model.enu.Faculty;
-import com.example.web_qwiz_app.model.enu.Role;
+import com.example.web_qwiz_app.domain.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +30,9 @@ public class User {
     private Role role;
 
     private boolean enabled;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Player player;
 
 
 }
