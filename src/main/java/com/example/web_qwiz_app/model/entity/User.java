@@ -32,5 +32,8 @@ public class User {
 
     private boolean enabled;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private Player player;
+
 
 }

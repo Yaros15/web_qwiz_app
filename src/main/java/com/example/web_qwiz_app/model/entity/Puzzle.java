@@ -19,7 +19,7 @@ public class Puzzle {
     @Column(nullable = false)
     private String question;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
