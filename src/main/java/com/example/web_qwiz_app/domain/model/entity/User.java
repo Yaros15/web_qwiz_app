@@ -2,12 +2,12 @@ package com.example.web_qwiz_app.domain.model.entity;
 
 import com.example.web_qwiz_app.domain.model.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name="users")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

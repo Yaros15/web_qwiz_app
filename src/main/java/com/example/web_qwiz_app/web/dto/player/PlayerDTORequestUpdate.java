@@ -1,7 +1,6 @@
 package com.example.web_qwiz_app.web.dto.player;
 
 import com.example.web_qwiz_app.domain.model.enums.Faculty;
-import com.example.web_qwiz_app.web.dto.user.UserDTOResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PlayerDTOResponse {
+public class PlayerDTORequestUpdate {
 
-    private Long id;
-    private String firstName;
+    private String firstname;
+
     private Faculty faculty;
-    private UserDTOResponse.Simple userDTOResponse;
 
 }

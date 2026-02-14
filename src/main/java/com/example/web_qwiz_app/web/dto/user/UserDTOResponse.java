@@ -26,6 +26,7 @@ public class UserDTOResponse {
     @Builder
     public static class Simple{
 
+        private Long id;
         private String username;
         private String email;
         private Role role;
