@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
+    boolean existsByAnswer(String answer);
+
     List<Answer> findByQuestCategory(QuestCategory questCategory);
 
 }

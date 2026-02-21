@@ -1,5 +1,7 @@
 package com.example.web_qwiz_app.web.dto.user;
 
+import com.example.web_qwiz_app.domain.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,9 +25,12 @@ public class UserDTORequestRegister {
 
     @NotBlank(message = "Введите пароль")
     @Size(min = 6, max = 100, message = "Пароль должен быть от 6 до 100 символов")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // не возвращаем пароль в ответе
     private String password;
 
     @NotBlank(message = "Укажите ваше имя")
     private String firstname;
+
+    private Role role;
 
 }

@@ -7,13 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTORequestUpdate {
+@Builder
+public class JwtResponseUserDto {
 
+    private String token;
+    private String type = "Bearer";
+    private Long id;
     private String email;
-    private Boolean enabled;
+    private String username;
     private Role role;
 
 }

@@ -13,8 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnswerDTORequest {
 
+    @NotNull(message = "Укажите ответ")
     private String answer;
 
+    @NotNull(message = "Выберите категорию ответа")
     private QuestCategory questCategory;
 
 }

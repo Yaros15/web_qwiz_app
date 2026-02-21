@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface PuzzleRepository extends JpaRepository<Puzzle, Long> {
 
+    boolean existsByQuestion(String question);
+
     List<Puzzle> findByAnswerId(Long answerId);
 
 }

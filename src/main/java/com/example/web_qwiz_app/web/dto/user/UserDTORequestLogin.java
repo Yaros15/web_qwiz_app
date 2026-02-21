@@ -1,5 +1,6 @@
 package com.example.web_qwiz_app.web.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class UserDTORequestLogin {
     private String email;
 
     @NotBlank(message = "Введите пароль")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
 }

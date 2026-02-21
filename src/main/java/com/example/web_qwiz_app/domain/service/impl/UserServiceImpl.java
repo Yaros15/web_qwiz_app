@@ -44,8 +44,6 @@ public class UserServiceImpl implements UserService {
 
         user.setEmail(request.getEmail());
 
-        user.setPassword(request.getPassword());
-
         user.setEnabled(request.getEnabled());
 
         user.setRole(request.getRole());
@@ -64,6 +62,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
     public Long getCurrentUserId() {
         return null;
     }
@@ -73,5 +76,7 @@ public class UserServiceImpl implements UserService {
         Long currentUserId = getCurrentUserId();
         return getUserById(currentUserId);
     }
+
+
 
 }
