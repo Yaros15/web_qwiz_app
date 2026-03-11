@@ -28,9 +28,4 @@ public class UserDTORequestRegister {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // не возвращаем пароль в ответе
     private String password;
 
-    @NotBlank(message = "Укажите ваше имя")
-    private String firstname;
-
-    private Role role;
-
 }

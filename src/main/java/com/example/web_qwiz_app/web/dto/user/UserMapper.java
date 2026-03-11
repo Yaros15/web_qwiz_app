@@ -24,20 +24,6 @@ public class UserMapper {
     }
 
 
-    public UserDTOResponse.Simple toSimpleResponse(User user) {
-        if (user == null) {
-            return null;
-        }
-
-        return UserDTOResponse.Simple.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
-    }
-
-
     public void updateEntity(UserDTORequestUpdate request, User user) {
         if (request == null || user == null) {
             return;
@@ -47,9 +33,7 @@ public class UserMapper {
             user.setEmail(request.getEmail());
         }
 
-        if (request.getEnabled() != null) {
-            user.setEnabled(request.getEnabled());
-        }
+
 
 
         if (request.getRole() != null) {
@@ -68,7 +52,6 @@ public class UserMapper {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .role(Role.ROLE_USER)
-                .enabled(true)
                 .build();
     }
 }

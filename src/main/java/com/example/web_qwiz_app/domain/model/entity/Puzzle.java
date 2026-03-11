@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name="puzzle")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,11 +20,15 @@ public class Puzzle {
     @Column(nullable = false)
     private String question;
 
+    @Column(nullable = false)
+    private QuestCategory questCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quiz_id", nullable = false)
+    private Quiz quiz;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
-
-    @Column(nullable = false)
-    private QuestCategory questCategory;
 
 }

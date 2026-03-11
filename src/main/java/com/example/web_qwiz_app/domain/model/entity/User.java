@@ -1,8 +1,12 @@
 package com.example.web_qwiz_app.domain.model.entity;
 
+import com.example.web_qwiz_app.domain.model.enums.Faculty;
 import com.example.web_qwiz_app.domain.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -27,12 +31,14 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
-    private boolean enabled;
+    @Enumerated(EnumType.STRING)
+    private Faculty faculty;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private Player player;
-
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Quiz> quizzes = new ArrayList<>();
 
 }

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserDTORequestLogin {
 
     @NotBlank(message = "Введите email")
+    @Email(message = "Некорректный email")
     private String email;
 
     @NotBlank(message = "Введите пароль")
