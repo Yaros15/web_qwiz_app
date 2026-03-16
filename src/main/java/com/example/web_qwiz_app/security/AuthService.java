@@ -4,6 +4,10 @@ package com.example.web_qwiz_app.security;
 import com.example.web_qwiz_app.domain.model.entity.User;
 import com.example.web_qwiz_app.domain.model.enums.Role;
 import com.example.web_qwiz_app.domain.repository.UserRepository;
+import com.example.web_qwiz_app.web.dto.user.JwtResponseUserDto;
+import com.example.web_qwiz_app.web.dto.user.MessageResponse;
+import com.example.web_qwiz_app.web.dto.user.UserDTORequestLogin;
+import com.example.web_qwiz_app.web.dto.user.UserDTORequestRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +25,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
-    public AuthResponse authenticateUser(LoginRequest loginRequest) {
+    public JwtResponseUserDto authenticateUser(UserDTORequestLogin loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -30,7 +34,7 @@ public class AuthService {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        return AuthResponse.builder()
+        return JwtResponseUserDto.builder()
                 .token(jwt)
                 .id(userDetails.getId())
                 .username(userDetails.getUsername())
@@ -39,7 +43,7 @@ public class AuthService {
                 .build();
     }
 
-    public MessageResponse registerUser(RegisterRequest registerRequest) {
+    public MessageResponse registerUser(UserDTORequestRegister registerRequest) {
         // Проверка существования email
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw new RuntimeException("Email уже используется!");
@@ -56,9 +60,11 @@ public class AuthService {
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.ROLE_USER)
+                /*
                 .gamesPlayed(0)
                 .totalScore(0)
                 .correctAnswers(0)
+                */
                 .build();
 
         userRepository.save(user);

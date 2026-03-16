@@ -17,6 +17,6 @@ public class JwtResponseUserDto {
     private Long id;
     private String email;
     private String username;
-    private Role role;
+    private String role;
 
 }
