@@ -60,11 +60,9 @@ public class AuthService {
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(Role.ROLE_USER)
-                /*
-                .gamesPlayed(0)
-                .totalScore(0)
-                .correctAnswers(0)
-                */
+
+                //TODO: реализовать потом методы для получения свойств пользователя
+
                 .build();
 
         userRepository.save(user);

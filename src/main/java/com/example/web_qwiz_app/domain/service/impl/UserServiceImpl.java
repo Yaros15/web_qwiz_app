@@ -4,12 +4,15 @@ import com.example.web_qwiz_app.domain.model.entity.User;
 import com.example.web_qwiz_app.domain.repository.UserRepository;
 import com.example.web_qwiz_app.domain.service.UserService;
 
+import com.example.web_qwiz_app.exception.ResourceNotFoundException;
 import com.example.web_qwiz_app.web.dto.user.UserDTORequestUpdate;
 import com.example.web_qwiz_app.web.dto.user.UserDTOResponse;
 import com.example.web_qwiz_app.web.dto.user.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,8 +47,6 @@ public class UserServiceImpl implements UserService {
 
         user.setEmail(request.getEmail());
 
-        user.setEnabled(request.getEnabled());
-
         user.setRole(request.getRole());
 
         User updateUser = userRepository.save(user);
@@ -57,7 +58,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(Long id) {
         User user = findUserById(id);
-        user.setEnabled(false);
         userRepository.save(user);
     }
 
@@ -68,13 +68,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long getCurrentUserId() {
-        return null;
+        return getCurrentUser().getId();
     }
 
     @Override
     public UserDTOResponse getCurrentUser() {
-        Long currentUserId = getCurrentUserId();
-        return getUserById(currentUserId);
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();
+
+        User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден"));
+
+        return UserDTOResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .faculty(user.getFaculty())
+                .build();
     }
 
 
