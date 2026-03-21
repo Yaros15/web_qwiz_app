@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private User findUserById(Long id){
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден"));
     }
 
     @Override
@@ -58,6 +59,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(Long id) {
         User user = findUserById(id);
+
+        //TODO делать мягкое удаление, через отключение
+
         userRepository.save(user);
     }
 

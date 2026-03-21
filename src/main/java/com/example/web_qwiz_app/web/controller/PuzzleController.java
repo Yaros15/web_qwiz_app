@@ -1,7 +1,11 @@
 package com.example.web_qwiz_app.web.controller;
 
 import com.example.web_qwiz_app.domain.service.PuzzleService;
+import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
+import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,15 +20,18 @@ public class PuzzleController {
     }
 
     @GetMapping("{id}")
-    public void findPuzzleById(){}
+    public ResponseEntity<PuzzleDTOResponse> findPuzzleById(@PathVariable Long id){}
 
     @PostMapping
-    public void createPuzzle(){}
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<PuzzleDTOResponse> savePuzzle(@RequestBody PuzzleDTORequest request){}
 
     @PutMapping("{id}")
-    public void updatePuzzle(){}
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<PuzzleDTOResponse> updatePuzzle(@PathVariable Long id, @RequestBody PuzzleDTORequest request){}
 
     @DeleteMapping("{id}")
-    public void deletePuzzle(){}
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> deletePuzzle(@PathVariable Long id){}
 
 }
