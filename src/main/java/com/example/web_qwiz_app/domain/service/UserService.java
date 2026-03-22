@@ -10,16 +10,12 @@ public interface UserService {
 
     Page <UserDTOResponse> getAllUsers (Pageable pageable);
 
-    UserDTOResponse getUserById(Long id);
+    UserDTOResponse findUserById(Long id);
 
     UserDTOResponse getCurrentUser();
 
-    Long getCurrentUserId();
-
     UserDTOResponse updateUser(Long id, UserDTORequestUpdate request);
 
-    void deleteUser(Long id);
-
-    boolean existsById (Long id);
+    Boolean deleteUser(Long id);
 
 }

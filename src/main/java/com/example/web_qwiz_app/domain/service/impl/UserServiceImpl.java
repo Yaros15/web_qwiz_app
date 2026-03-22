@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    private User findUserById(Long id){
+    private User getUserById(Long id){
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден"));
     }
@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTOResponse getUserById(Long id) {
-        User user = findUserById(id);
+    public UserDTOResponse findUserById(Long id) {
+        User user = getUserById(id);
         return userMapper.toResponse(user);
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTOResponse updateUser(Long id, UserDTORequestUpdate request) {
 
-        User user = findUserById(id);
+        User user = getUserById(id);
 
         user.setEmail(request.getEmail());
 
@@ -57,22 +57,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteUser(Long id) {
-        User user = findUserById(id);
+    public Boolean deleteUser(Long id) {
 
-        //TODO делать мягкое удаление, через отключение
+        if(userRepository.existsById(id)) {
+            User user = getUserById(id);
+            //TODO делать мягкое удаление, через отключение
+            userRepository.save(user);
+            return true;
+        }else{
+            return false;
+        }
 
-        userRepository.save(user);
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return userRepository.existsById(id);
-    }
-
-    @Override
-    public Long getCurrentUserId() {
-        return getCurrentUser().getId();
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,12 @@ public class PuzzleServiceImpl implements PuzzleService {
     }
 
     @Override
+    public Page<PuzzleDTOResponse> getAllPuzzle(Pageable pageable) {
+        //TODO Реализовать постраничную выгрузку Всех Вопросов
+        return null;
+    }
+
+    @Override
     public PuzzleDTOResponse findPuzzleById(Long id) {
         return puzzleMapper.toResponse(getPuzzleById(id));
     }
@@ -34,6 +42,9 @@ public class PuzzleServiceImpl implements PuzzleService {
         Puzzle puzzle = puzzleMapper.toEntity(request);
 
         Puzzle puzzleSave = puzzleRepository.save(puzzle);
+
+        //TODO Добавить связь с Квизом
+        //TODO Добавить связь с Ответом
 
         return puzzleMapper.toResponse(puzzleSave);
     }
@@ -47,14 +58,21 @@ public class PuzzleServiceImpl implements PuzzleService {
 
         Puzzle puzzleUpdate = puzzleRepository.save(puzzle);
 
+        //TODO Добавить связь с Квизом
+
         return puzzleMapper.toResponse(puzzleUpdate);
 
     }
 
     @Override
-    public void deletePuzzle(Long id) {
+    public Boolean deletePuzzle(Long id) {
 
-        puzzleRepository.delete(getPuzzleById(id));
+        if(puzzleRepository.existsById(id)) {
+            puzzleRepository.delete(getPuzzleById(id));
+            return true;
+        }else{
+            return false;
+        }
 
     }
 }

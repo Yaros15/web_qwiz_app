@@ -8,6 +8,8 @@ import com.example.web_qwiz_app.web.dto.answer.AnswerDTORequest;
 import com.example.web_qwiz_app.web.dto.answer.AnswerDTOResponse;
 import com.example.web_qwiz_app.web.dto.answer.AnswerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository answerRepository;
     private final AnswerMapper answerMapper;
+
+    @Override
+    public Page<AnswerDTOResponse> getAllAnswer(Pageable pageable) {
+        //TODO Реализовать постраничную выгрузку Всех Ответов
+        return null;
+    }
 
     private Answer getAnswerById(Long id){
         return answerRepository.findById(id)
@@ -35,6 +43,8 @@ public class AnswerServiceImpl implements AnswerService {
 
         Answer answerSave = answerRepository.save(answer);
 
+        //TODO Добавить связь с Вопросом
+
         return answerMapper.toResponse(answerSave);
     }
 
@@ -46,11 +56,18 @@ public class AnswerServiceImpl implements AnswerService {
 
         Answer answerUpdate = answerRepository.save(answer);
 
+        //TODO Добавить связь с Вопросом
+
         return answerMapper.toResponse(answerUpdate);
     }
 
     @Override
-    public void deleteAnswer(Long id) {
-        answerRepository.delete(getAnswerById(id));
+    public Boolean deleteAnswer(Long id) {
+        if(answerRepository.existsById(id)) {
+            answerRepository.delete(getAnswerById(id));
+            return true;
+        }else{
+            return false;
+        }
     }
 }

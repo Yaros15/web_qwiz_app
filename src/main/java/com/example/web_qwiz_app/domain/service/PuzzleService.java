@@ -2,17 +2,19 @@ package com.example.web_qwiz_app.domain.service;
 
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface PuzzleService {
 
-    //public void getAllQuiz();
+    Page<PuzzleDTOResponse> getAllPuzzle(Pageable pageable);
 
-    public PuzzleDTOResponse findPuzzleById(Long id);
+    PuzzleDTOResponse findPuzzleById(Long id);
 
-    public PuzzleDTOResponse createPuzzle(PuzzleDTORequest request);
+    PuzzleDTOResponse createPuzzle(PuzzleDTORequest request);
 
-    public PuzzleDTOResponse updatePuzzle(Long id, PuzzleDTORequest request);
+    PuzzleDTOResponse updatePuzzle(Long id, PuzzleDTORequest request);
 
-    public void deletePuzzle(Long id);
+    Boolean deletePuzzle(Long id);
 
 }
