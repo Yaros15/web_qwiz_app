@@ -1,9 +1,14 @@
 package com.example.web_qwiz_app.domain.service.impl;
 
+import com.example.web_qwiz_app.domain.model.entity.Answer;
+import com.example.web_qwiz_app.domain.model.entity.Puzzle;
 import com.example.web_qwiz_app.domain.model.entity.Quiz;
+import com.example.web_qwiz_app.domain.repository.AnswerRepository;
+import com.example.web_qwiz_app.domain.repository.PuzzleRepository;
 import com.example.web_qwiz_app.domain.repository.QuizRepository;
 import com.example.web_qwiz_app.domain.service.QuizService;
 import com.example.web_qwiz_app.exception.ResourceNotFoundException;
+import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import com.example.web_qwiz_app.web.dto.quiz.QuizDTORequest;
 import com.example.web_qwiz_app.web.dto.quiz.QuizDTOResponse;
@@ -20,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizRepository quizRepository;
+    private final AnswerRepository answerRepository;
+    private final PuzzleRepository puzzleRepository;
     private final QuizMapper quizMapper;
 
     @Override
@@ -42,9 +49,29 @@ public class QuizServiceImpl implements QuizService {
     public QuizDTOResponse createQuiz(QuizDTORequest request) {
         Quiz quiz = quizMapper.toEntity(request);
 
-        Quiz quizSave = quizRepository.save(quiz);
+        if(request.getQuestions() != null){
+            for(PuzzleDTORequest puzzleRequest : request.getQuestions()){
 
-        //TODO Добавить связь с Вопросом
+                Answer answer = Answer.builder()
+                        .answer("") //TODO Добавить работу с ответом
+                        .questCategory(puzzleRequest.getQuestCategory())
+                        .build();
+
+                answerRepository.save(answer);
+
+                Puzzle puzzle = Puzzle.builder()
+                        .question(puzzleRequest.getQuestion())
+                        .answer(answer)
+                        .questCategory(puzzleRequest.getQuestCategory())
+                        .build();
+
+                puzzleRepository.save(puzzle);
+
+                quiz.addPuzzle(puzzle);
+            }
+        }
+
+        Quiz quizSave = quizRepository.save(quiz);
 
         return quizMapper.toResponse(quizSave);
     }

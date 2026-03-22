@@ -36,4 +36,14 @@ public class Quiz {
     @Builder.Default
     private List<Puzzle> questions = new ArrayList<>();
 
+    public void addPuzzle(Puzzle puzzle){
+        questions.add(puzzle);
+        puzzle.setQuiz(this);
+    }
+
+    public void removePuzzle(Puzzle puzzle){
+        questions.remove(puzzle);
+        puzzle.setQuiz(this);
+    }
+
 }

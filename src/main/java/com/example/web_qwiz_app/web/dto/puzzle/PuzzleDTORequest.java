@@ -1,8 +1,8 @@
 package com.example.web_qwiz_app.web.dto.puzzle;
 
-import com.example.web_qwiz_app.domain.model.entity.Answer;
 import com.example.web_qwiz_app.domain.model.enums.QuestCategory;
-import jakarta.validation.constraints.NotBlank;
+import com.example.web_qwiz_app.web.dto.answer.AnswerDTORequest;
+import com.example.web_qwiz_app.web.dto.quiz.QuizDTORequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +19,12 @@ public class PuzzleDTORequest {
     private String question;
 
     @NotNull(message = "Укажите ответ")
-    private Answer answer;
+    private AnswerDTORequest answer;
 
     @NotNull(message = "Выберите категорию вопроса")
     private QuestCategory questCategory;
+
+    @NotNull(message = "Укажите квиз")
+    private QuizDTORequest quiz;
 
 }

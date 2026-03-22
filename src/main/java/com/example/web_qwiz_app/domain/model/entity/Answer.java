@@ -30,4 +30,14 @@ public class Answer {
     @Column(nullable = false)
     private QuestCategory questCategory;
 
+    public void addPuzzle(Puzzle puzzle){
+        puzzles.add(puzzle);
+        puzzle.setAnswer(this);
+    }
+
+    public void removePuzzle(Puzzle puzzle){
+        puzzles.remove(puzzle);
+        puzzle.setAnswer(this);
+    }
+
 }

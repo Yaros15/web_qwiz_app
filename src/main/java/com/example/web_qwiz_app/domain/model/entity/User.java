@@ -41,4 +41,14 @@ public class User {
     @Builder.Default
     private List<Quiz> quizzes = new ArrayList<>();
 
+    public void addQuiz(Quiz quiz){
+        quizzes.add(quiz);
+        quiz.setAuthor(this);
+    }
+
+    public void removeQuiz(Quiz quiz){
+        quizzes.remove(quiz);
+        quiz.setAuthor(this);
+    }
+
 }

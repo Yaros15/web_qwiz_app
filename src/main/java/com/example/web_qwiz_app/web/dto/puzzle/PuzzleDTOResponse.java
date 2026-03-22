@@ -3,6 +3,7 @@ package com.example.web_qwiz_app.web.dto.puzzle;
 import com.example.web_qwiz_app.domain.model.entity.Answer;
 import com.example.web_qwiz_app.domain.model.enums.QuestCategory;
 import com.example.web_qwiz_app.web.dto.answer.AnswerDTOResponse;
+import com.example.web_qwiz_app.web.dto.quiz.QuizDTORequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class PuzzleDTOResponse {
     private String question;
     private AnswerDTOResponse answer;
     private QuestCategory questCategory;
+    private QuizDTORequest quiz;
 
 }
