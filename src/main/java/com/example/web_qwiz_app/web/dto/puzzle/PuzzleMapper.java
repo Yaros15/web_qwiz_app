@@ -35,7 +35,7 @@ public class PuzzleMapper {
         Puzzle puzzle = Puzzle.builder()
                 .question(request.getQuestion())
                 .questCategory(request.getQuestCategory())
-                .answer(request.getAnswer())
+                .answer(answerMapper.toEntity(request.getAnswer()))
                 .build();
 
         return puzzle;

@@ -4,6 +4,7 @@ import com.example.web_qwiz_app.domain.model.entity.Puzzle;
 import com.example.web_qwiz_app.domain.repository.PuzzleRepository;
 import com.example.web_qwiz_app.domain.service.PuzzleService;
 import com.example.web_qwiz_app.exception.ResourceNotFoundException;
+import com.example.web_qwiz_app.web.dto.answer.AnswerMapper;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleMapper;
@@ -20,6 +21,7 @@ public class PuzzleServiceImpl implements PuzzleService {
 
     private final PuzzleRepository puzzleRepository;
     private final PuzzleMapper puzzleMapper;
+    private final AnswerMapper answerMapper;
 
     private Puzzle getPuzzleById(Long id){
         return puzzleRepository.findById(id)
@@ -53,7 +55,7 @@ public class PuzzleServiceImpl implements PuzzleService {
     public PuzzleDTOResponse updatePuzzle(Long id, PuzzleDTORequest request) {
         Puzzle puzzle = getPuzzleById(id);
         puzzle.setQuestion(request.getQuestion());
-        puzzle.setAnswer(request.getAnswer());
+        puzzle.setAnswer(answerMapper.toEntity(request.getAnswer()));
         puzzle.setQuestCategory(request.getQuestCategory());
 
         Puzzle puzzleUpdate = puzzleRepository.save(puzzle);
