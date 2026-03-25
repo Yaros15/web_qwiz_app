@@ -8,11 +8,13 @@ import com.example.web_qwiz_app.web.dto.answer.AnswerDTORequest;
 import com.example.web_qwiz_app.web.dto.answer.AnswerDTOResponse;
 import com.example.web_qwiz_app.web.dto.answer.AnswerMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,8 +25,8 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Page<AnswerDTOResponse> getAllAnswer(Pageable pageable) {
-        //TODO Реализовать постраничную выгрузку Всех Ответов
-        return null;
+        Page<Answer> answerPage = answerRepository.findAll(pageable);
+        return answerMapper.toResponsePage(answerPage);
     }
 
     private Answer getAnswerById(Long id){
@@ -38,6 +40,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    @Transactional
     public AnswerDTOResponse createAnswer(AnswerDTORequest request) {
         Answer answer = answerMapper.toEntity(request);
 
@@ -49,6 +52,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    @Transactional
     public AnswerDTOResponse updateAnswer(Long id, AnswerDTORequest request) {
         Answer answer = getAnswerById(id);
         answer.setAnswer(request.getAnswer());

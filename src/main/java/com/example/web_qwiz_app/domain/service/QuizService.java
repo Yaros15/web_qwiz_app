@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface QuizService {
 
-    Page<PuzzleDTOResponse> getAllQuiz(Pageable pageable);
+    Page<QuizDTOResponse> getAllQuiz(Pageable pageable);
 
     QuizDTOResponse findQuizById(Long id);
 

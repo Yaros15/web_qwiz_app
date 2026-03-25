@@ -3,7 +3,11 @@ package com.example.web_qwiz_app.web.dto.puzzle;
 import com.example.web_qwiz_app.domain.model.entity.Puzzle;
 import com.example.web_qwiz_app.web.dto.answer.AnswerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -39,6 +43,16 @@ public class PuzzleMapper {
                 .build();
 
         return puzzle;
+    }
+
+    public Page<PuzzleDTOResponse> toResponsePage (Page<Puzzle> puzzlePage){
+        List<PuzzleDTOResponse> puzzleList = puzzlePage
+                .getContent()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+
+        return new PageImpl<>(puzzleList, puzzlePage.getPageable(), puzzlePage.getTotalElements());
     }
 
 }

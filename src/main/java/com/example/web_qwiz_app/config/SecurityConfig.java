@@ -1,9 +1,9 @@
 package com.example.web_qwiz_app.config;
 
-import com.example.web_qwiz_app.security.AuthEntryPointJwt;
-import com.example.web_qwiz_app.security.AuthTokenFilter;
-import com.example.web_qwiz_app.security.JwtUtils;
-import com.example.web_qwiz_app.security.UserDetailsServiceImpl;
+import com.example.web_qwiz_app.security.exception.AuthEntryPointJwt;
+import com.example.web_qwiz_app.security.config.AuthTokenFilter;
+import com.example.web_qwiz_app.security.config.JwtUtils;
+import com.example.web_qwiz_app.security.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

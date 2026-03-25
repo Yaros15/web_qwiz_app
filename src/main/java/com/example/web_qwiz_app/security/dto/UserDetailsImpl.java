@@ -1,8 +1,9 @@
-package com.example.web_qwiz_app.security;
+package com.example.web_qwiz_app.security.dto;
 
 import com.example.web_qwiz_app.domain.model.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,13 +24,13 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private String email;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
+                new SimpleGrantedAuthority(user.getRole().name())
         );
 
         return UserDetailsImpl.builder()

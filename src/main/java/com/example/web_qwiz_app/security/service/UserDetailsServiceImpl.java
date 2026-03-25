@@ -1,8 +1,9 @@
-package com.example.web_qwiz_app.security;
+package com.example.web_qwiz_app.security.service;
 
 
 import com.example.web_qwiz_app.domain.model.entity.User;
 import com.example.web_qwiz_app.domain.repository.UserRepository;
+import com.example.web_qwiz_app.security.dto.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

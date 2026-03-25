@@ -9,16 +9,17 @@ import com.example.web_qwiz_app.domain.repository.QuizRepository;
 import com.example.web_qwiz_app.domain.service.QuizService;
 import com.example.web_qwiz_app.exception.ResourceNotFoundException;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
-import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import com.example.web_qwiz_app.web.dto.quiz.QuizDTORequest;
 import com.example.web_qwiz_app.web.dto.quiz.QuizDTOResponse;
 import com.example.web_qwiz_app.web.dto.quiz.QuizMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,9 +31,9 @@ public class QuizServiceImpl implements QuizService {
     private final QuizMapper quizMapper;
 
     @Override
-    public Page<PuzzleDTOResponse> getAllQuiz(Pageable pageable) {
-        //TODO Реализовать постраничную выгрузку Всех Квизов
-        return null;
+    public Page<QuizDTOResponse> getAllQuiz(Pageable pageable) {
+        Page<Quiz> quizPage = quizRepository.findAll(pageable);
+        return quizMapper.toResponsePage(quizPage);
     }
 
     private Quiz getQuizById(Long id){
@@ -46,6 +47,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @Transactional
     public QuizDTOResponse createQuiz(QuizDTORequest request) {
         Quiz quiz = quizMapper.toEntity(request);
 
@@ -77,6 +79,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @Transactional
     public QuizDTOResponse updateQuiz(Long id, QuizDTORequest request) {
         Quiz quiz = getQuizById(id);
 

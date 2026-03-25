@@ -9,11 +9,13 @@ import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTORequest;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleDTOResponse;
 import com.example.web_qwiz_app.web.dto.puzzle.PuzzleMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,8 +32,8 @@ public class PuzzleServiceImpl implements PuzzleService {
 
     @Override
     public Page<PuzzleDTOResponse> getAllPuzzle(Pageable pageable) {
-        //TODO Реализовать постраничную выгрузку Всех Вопросов
-        return null;
+        Page<Puzzle> puzzlePage = puzzleRepository.findAll(pageable);
+        return puzzleMapper.toResponsePage(puzzlePage);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class PuzzleServiceImpl implements PuzzleService {
     }
 
     @Override
+    @Transactional
     public PuzzleDTOResponse createPuzzle(PuzzleDTORequest request) {
         Puzzle puzzle = puzzleMapper.toEntity(request);
 
@@ -52,6 +55,7 @@ public class PuzzleServiceImpl implements PuzzleService {
     }
 
     @Override
+    @Transactional
     public PuzzleDTOResponse updatePuzzle(Long id, PuzzleDTORequest request) {
         Puzzle puzzle = getPuzzleById(id);
         puzzle.setQuestion(request.getQuestion());

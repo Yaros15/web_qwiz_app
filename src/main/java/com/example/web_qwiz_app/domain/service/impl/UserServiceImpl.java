@@ -9,6 +9,7 @@ import com.example.web_qwiz_app.web.dto.user.UserDTORequestUpdate;
 import com.example.web_qwiz_app.web.dto.user.UserDTOResponse;
 import com.example.web_qwiz_app.web.dto.user.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,13 +27,15 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private User getUserById(Long id){
+
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден"));
     }
 
     @Override
     public Page<UserDTOResponse> getAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(userMapper::toResponse);
+        Page<User> answerPage = userRepository.findAll(pageable);
+        return userMapper.toResponsePage(answerPage);
     }
 
     @Override
@@ -56,7 +60,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public Boolean deleteUser(Long id) {
 
         if(userRepository.existsById(id)) {

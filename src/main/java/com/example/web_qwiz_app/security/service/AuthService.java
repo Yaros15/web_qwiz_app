@@ -1,9 +1,11 @@
-package com.example.web_qwiz_app.security;
+package com.example.web_qwiz_app.security.service;
 
 
 import com.example.web_qwiz_app.domain.model.entity.User;
 import com.example.web_qwiz_app.domain.model.enums.Role;
 import com.example.web_qwiz_app.domain.repository.UserRepository;
+import com.example.web_qwiz_app.security.config.JwtUtils;
+import com.example.web_qwiz_app.security.dto.UserDetailsImpl;
 import com.example.web_qwiz_app.web.dto.user.JwtResponseUserDto;
 import com.example.web_qwiz_app.web.dto.user.MessageResponse;
 import com.example.web_qwiz_app.web.dto.user.UserDTORequestLogin;

@@ -3,7 +3,11 @@ package com.example.web_qwiz_app.web.dto.user;
 
 import com.example.web_qwiz_app.domain.model.entity.User;
 import com.example.web_qwiz_app.domain.model.enums.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Component
@@ -23,25 +27,6 @@ public class UserMapper {
                 .build();
     }
 
-
-    public void updateEntity(UserDTORequestUpdate request, User user) {
-        if (request == null || user == null) {
-            return;
-        }
-
-        if (request.getEmail() != null) {
-            user.setEmail(request.getEmail());
-        }
-
-
-
-
-        if (request.getRole() != null) {
-            user.setRole(request.getRole());
-        }
-
-    }
-
     public User toEntity(UserDTORequestRegister request) {
         if (request == null) {
             return null;
@@ -54,4 +39,15 @@ public class UserMapper {
                 .role(Role.ROLE_USER)
                 .build();
     }
+
+    public Page<UserDTOResponse> toResponsePage (Page<User> userPage){
+        List<UserDTOResponse> userList = userPage
+                .getContent()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+
+        return new PageImpl<>(userList, userPage.getPageable(), userPage.getTotalElements());
+    }
+
 }

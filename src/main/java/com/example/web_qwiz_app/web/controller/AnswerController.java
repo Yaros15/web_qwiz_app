@@ -5,6 +5,10 @@ import com.example.web_qwiz_app.web.dto.answer.AnswerDTORequest;
 import com.example.web_qwiz_app.web.dto.answer.AnswerDTOResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +22,10 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @GetMapping
-    public void getAllAnswer(){
-        //TODO Реализовать постраничную выгрузку Всех Ответов
+    public ResponseEntity<Page<AnswerDTOResponse>> getAllAnswer(@PageableDefault(size = 10, sort = "answer", direction = Sort.Direction.ASC)
+                                 Pageable pageable){
+        Page<AnswerDTOResponse> answerDTOResponsePage = answerService.getAllAnswer(pageable);
+        return ResponseEntity.ok(answerDTOResponsePage);
     }
 
     @GetMapping("{id}")

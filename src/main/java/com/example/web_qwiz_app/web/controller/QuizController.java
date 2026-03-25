@@ -5,6 +5,10 @@ import com.example.web_qwiz_app.web.dto.quiz.QuizDTORequest;
 import com.example.web_qwiz_app.web.dto.quiz.QuizDTOResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +23,10 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping
-    public void getAllQuiz(){
-        //TODO Реализовать постраничную выгрузку Всех Квизов
+    public ResponseEntity<Page<QuizDTOResponse>> getAllQuiz(@PageableDefault(size = 10, sort = "title", direction = Sort.Direction.ASC)
+                                                            Pageable pageable){
+        Page<QuizDTOResponse> quizDTOResponsePage = quizService.getAllQuiz(pageable);
+        return ResponseEntity.ok(quizDTOResponsePage);
     }
 
     @GetMapping("{id}")

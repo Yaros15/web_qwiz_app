@@ -1,7 +1,7 @@
 package com.example.web_qwiz_app.web.controller;
 
 
-import com.example.web_qwiz_app.security.AuthService;
+import com.example.web_qwiz_app.security.service.AuthService;
 import com.example.web_qwiz_app.web.dto.user.JwtResponseUserDto;
 import com.example.web_qwiz_app.web.dto.user.MessageResponse;
 import com.example.web_qwiz_app.web.dto.user.UserDTORequestLogin;

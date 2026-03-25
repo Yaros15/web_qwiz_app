@@ -1,7 +1,11 @@
 package com.example.web_qwiz_app.web.dto.answer;
 
 import com.example.web_qwiz_app.domain.model.entity.Answer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class AnswerMapper {
@@ -31,13 +35,14 @@ public class AnswerMapper {
 
     }
 
-    public void updateAnswer(AnswerDTORequest request, Answer answer){
-        if(request == null || answer == null){
-            return;
-        }
+    public Page<AnswerDTOResponse> toResponsePage (Page<Answer> answerPage){
+        List<AnswerDTOResponse> answerList = answerPage
+                .getContent()
+                .stream()
+                .map(this::toResponse)
+                .toList();
 
-        answer.setAnswer(request.getAnswer());
-        answer.setQuestCategory(request.getQuestCategory());
+        return new PageImpl<>(answerList, answerPage.getPageable(), answerPage.getTotalElements());
     }
 
 }
