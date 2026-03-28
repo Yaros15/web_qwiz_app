@@ -37,7 +37,7 @@ public class Answer {
 
     public void removePuzzle(Puzzle puzzle){
         puzzles.remove(puzzle);
-        puzzle.setAnswer(this);
+        puzzle.setAnswer(null);
     }
 
 }

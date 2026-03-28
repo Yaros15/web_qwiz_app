@@ -1,6 +1,7 @@
 package com.example.web_qwiz_app.web.dto.quiz;
 
 import com.example.web_qwiz_app.domain.model.entity.Quiz;
+import com.example.web_qwiz_app.web.dto.puzzle.PuzzleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,6 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuizMapper {
 
+    private final PuzzleMapper puzzleMapper;
+
     public QuizDTOResponse toResponse(Quiz quiz){
         if(quiz == null){
             return null;
@@ -21,6 +24,7 @@ public class QuizMapper {
                 .id(quiz.getId())
                 .title(quiz.getTitle())
                 .description(quiz.getDescription())
+                .questions(puzzleMapper.toResponseList(quiz.getQuestions()))
                 .build();
 
     }
@@ -33,6 +37,7 @@ public class QuizMapper {
         return Quiz.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
+                .questions(puzzleMapper.toEntityList(request.getQuestions()))
                 .build();
 
     }

@@ -43,7 +43,7 @@ public class Quiz {
 
     public void removePuzzle(Puzzle puzzle){
         questions.remove(puzzle);
-        puzzle.setQuiz(this);
+        puzzle.setQuiz(null);
     }
 
 }

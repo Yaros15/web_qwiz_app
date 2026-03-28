@@ -1,6 +1,8 @@
 package com.example.web_qwiz_app.web.dto.answer;
 
 import com.example.web_qwiz_app.domain.model.entity.Answer;
+import com.example.web_qwiz_app.web.dto.puzzle.PuzzleMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
@@ -8,7 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class AnswerMapper {
+
+    private final PuzzleMapper puzzleMapper;
 
     public AnswerDTOResponse toResponse(Answer answer){
         if(answer == null){
@@ -19,6 +24,7 @@ public class AnswerMapper {
                 .id(answer.getId())
                 .answer(answer.getAnswer())
                 .questCategory(answer.getQuestCategory())
+                .questions(puzzleMapper.toResponseList(answer.getPuzzles()))
                 .build();
 
     }
@@ -31,6 +37,7 @@ public class AnswerMapper {
         return Answer.builder()
                 .answer(request.getAnswer())
                 .questCategory(request.getQuestCategory())
+                .puzzles(puzzleMapper.toEntityList(request.getQuestions()))
                 .build();
 
     }

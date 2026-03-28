@@ -42,6 +42,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     @Transactional
     public AnswerDTOResponse createAnswer(AnswerDTORequest request) {
+
         Answer answer = answerMapper.toEntity(request);
 
         Answer answerSave = answerRepository.save(answer);

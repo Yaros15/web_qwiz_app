@@ -55,4 +55,22 @@ public class PuzzleMapper {
         return new PageImpl<>(puzzleList, puzzlePage.getPageable(), puzzlePage.getTotalElements());
     }
 
+    public List<PuzzleDTOResponse> toResponseList (List<Puzzle> puzzleList){
+        List<PuzzleDTOResponse> puzzleListResponse = puzzleList
+                .stream()
+                .map(this::toResponse)
+                .toList();
+
+        return puzzleListResponse;
+    }
+
+    public List<Puzzle> toEntityList (List<PuzzleDTORequest> puzzleDTORequests){
+        List<Puzzle> puzzleListEntity = puzzleDTORequests
+                .stream()
+                .map(this::toEntity)
+                .toList();
+
+        return puzzleListEntity;
+    }
+
 }
