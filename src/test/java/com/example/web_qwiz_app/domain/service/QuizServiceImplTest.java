@@ -16,8 +16,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -80,14 +83,16 @@ public class QuizServiceImplTest {
         @Test
         @DisplayName("должен вернуть пустую страницу, если в БД нет квизов")
         void shouldReturnEmptyPage_whenNoQuizzesInDatabase(){
-            // Arrange Подготовка данных и настройка моков -->
+            // Arrange Подготовка данных -->
             var pageable = PageRequest.of(0,10, Sort.by("title"));
             var emptyEntityPage = Page.<Quiz>empty(pageable);
             var emptyResponsePage = Page.<QuizDTOResponse>empty(pageable);
 
+                        // настройка моков -->
             given(quizRepository.findAll(pageable)).willReturn(emptyEntityPage);
             given(quizMapper.toResponsePage(emptyEntityPage)).willReturn(emptyResponsePage);
-            // Arrange Подготовка данных и настройка моков <--
+                        // настройка моков <--
+            // Arrange Подготовка данных <--
 
             // Act Вызов тестируемого метода -->
             Page<QuizDTOResponse> result = quizService.getAllQuiz(pageable);
@@ -105,6 +110,56 @@ public class QuizServiceImplTest {
             // Верификация: убеждаемся, что методы моков были вызваны <--
             // Assert Проверка результата <--
         }
+
+        @Test
+        @DisplayName("должен вернуть страницу с квизами, если они есть")
+        void shouldReturnQuizPage_whenQuizzesExist(){
+            // Arrange Подготовка данных -->
+            var pageable = PageRequest.of(0,10);
+
+            var quiz = Quiz.builder()
+                    .id(1L)
+                    .title("Test Quiz")
+                    .description("Test Quiz Description")
+                    .build();
+
+            var quizPage = new PageImpl<>(List.of(quiz), pageable, 1);
+
+            var response = QuizDTOResponse.builder()
+                    .id(1L)
+                    .title("Test Quiz")
+                    .description("Test Quiz Description")
+                    .build();
+            var responsePage = new PageImpl<>(List.of(response), pageable, 1);
+
+            // настройка моков -->
+            given(quizRepository.findAll(pageable)).willReturn(quizPage);
+            given(quizMapper.toResponsePage(quizPage)).willReturn(responsePage);
+            // настройка моков <--
+            // Arrange Подготовка данных <--
+
+            // Act Вызов тестируемого метода -->
+            var result = quizService.getAllQuiz(pageable);
+            // Act Вызов тестируемого метода <--
+
+            // Assert Проверка результата -->
+            assertThat(result).isNotNull();
+
+            // Проверяем размер контента (должен быть 1 элемент)
+            assertThat(result.getContent()).hasSize(1);
+
+            assertThat(result.getContent().stream().findFirst().get().getTitle())
+                    .isEqualTo("Test Quiz");
+
+            // Верификация: убеждаемся, что методы моков были вызваны -->
+            then(quizRepository).should().findAll(pageable);
+            then(quizMapper).should().toResponsePage(quizPage);
+            // Верификация: убеждаемся, что методы моков были вызваны <--
+            // Assert Проверка результата <--
+        }
+
+
+
     }
     // Вложенный класс для тестирования метода getAllQuiz() <--
 

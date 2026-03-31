@@ -20,14 +20,25 @@ public class PuzzleMapper {
             return null;
         }
 
-        PuzzleDTOResponse response = PuzzleDTOResponse.builder()
+        return PuzzleDTOResponse.builder()
                 .id(puzzle.getId())
                 .question(puzzle.getQuestion())
                 .answer(answerMapper.toResponse(puzzle.getAnswer()))
                 .questCategory(puzzle.getQuestCategory())
                 .build();
 
-        return response;
+    }
+
+    public PuzzleDTOResponse.PuzzleShort toResponseShort (Puzzle puzzle){
+        if(puzzle == null){
+            return null;
+        }
+
+        return PuzzleDTOResponse.PuzzleShort.builder()
+                .id(puzzle.getId())
+                .question(puzzle.getQuestion())
+                .questCategory(puzzle.getQuestCategory())
+                .build();
 
     }
 

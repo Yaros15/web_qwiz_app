@@ -16,7 +16,15 @@ public class QuizDTOResponse {
     private Long id;
     private String title;
     private String description;
-
-    // Список вопросов (для детального просмотра)
     private List<PuzzleDTOResponse> questions;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class QuizShort{
+        private Long id;
+        private String title;
+        private String description;
+    }
 }

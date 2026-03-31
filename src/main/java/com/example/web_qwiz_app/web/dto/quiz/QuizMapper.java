@@ -29,6 +29,19 @@ public class QuizMapper {
 
     }
 
+    public QuizDTOResponse.QuizShort toResponseShort(Quiz quiz){
+        if(quiz == null){
+            return null;
+        }
+
+        return QuizDTOResponse.QuizShort.builder()
+                .id(quiz.getId())
+                .title(quiz.getTitle())
+                .description(quiz.getDescription())
+                .build();
+
+    }
+
     public Quiz toEntity(QuizDTORequest request){
         if(request == null){
             return null;

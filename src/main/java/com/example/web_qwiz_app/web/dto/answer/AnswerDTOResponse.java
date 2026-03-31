@@ -16,11 +16,18 @@ import java.util.List;
 public class AnswerDTOResponse {
 
     private Long id;
-
     private String answer;
-
     private QuestCategory questCategory;
-
     private List<PuzzleDTOResponse> questions;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class AnswerShort{
+        private Long id;
+        private String answer;
+        private QuestCategory questCategory;
+    }
 
 }

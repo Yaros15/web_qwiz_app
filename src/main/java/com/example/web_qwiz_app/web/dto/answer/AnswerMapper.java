@@ -29,6 +29,19 @@ public class AnswerMapper {
 
     }
 
+    public AnswerDTOResponse.AnswerShort toResponseShort(Answer answer){
+        if(answer == null){
+            return null;
+        }
+
+        return AnswerDTOResponse.AnswerShort.builder()
+                .id(answer.getId())
+                .answer(answer.getAnswer())
+                .questCategory(answer.getQuestCategory())
+                .build();
+
+    }
+
     public Answer toEntity (AnswerDTORequest request){
         if(request == null){
             return null;

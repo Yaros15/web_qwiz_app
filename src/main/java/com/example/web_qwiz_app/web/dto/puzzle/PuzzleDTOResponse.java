@@ -21,4 +21,14 @@ public class PuzzleDTOResponse {
     private QuestCategory questCategory;
     private QuizDTORequest quiz;
 
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class PuzzleShort{
+        private Long id;
+        private String question;
+        private QuestCategory questCategory;
+    }
+
 }
