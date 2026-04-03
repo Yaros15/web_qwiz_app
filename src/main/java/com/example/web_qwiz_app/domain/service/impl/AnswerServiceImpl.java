@@ -10,9 +10,12 @@ import com.example.web_qwiz_app.web.dto.answer.AnswerMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -26,7 +29,15 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Page<AnswerDTOResponse> getAllAnswer(Pageable pageable) {
         Page<Answer> answerPage = answerRepository.findAll(pageable);
-        return answerMapper.toResponsePage(answerPage);
+
+        List<AnswerDTOResponse> answerList = answerPage
+                .getContent()
+                .stream()
+                .map((x) -> answerMapper.toResponse(x))
+                .toList();
+
+        return new PageImpl<>(answerList, answerPage.getPageable(), answerPage.getTotalElements());
+
     }
 
     private Answer getAnswerById(Long id){

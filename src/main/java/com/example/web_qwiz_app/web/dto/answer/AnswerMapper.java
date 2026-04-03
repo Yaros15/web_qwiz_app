@@ -55,14 +55,4 @@ public class AnswerMapper {
 
     }
 
-    public Page<AnswerDTOResponse> toResponsePage (Page<Answer> answerPage){
-        List<AnswerDTOResponse> answerList = answerPage
-                .getContent()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-
-        return new PageImpl<>(answerList, answerPage.getPageable(), answerPage.getTotalElements());
-    }
-
 }

@@ -602,6 +602,7 @@ public class QuizServiceImplTest {
                     .questions(Collections.emptyList())  // Пустой список, не null
                     .build();
 
+
             var quizEntity = createQuiz(1L, "Quiz", "Desc");
             var response = createQuizResponse(1L, "Quiz", "Desc");
 
